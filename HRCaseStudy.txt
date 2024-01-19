@@ -1,0 +1,1052 @@
+﻿
+MariaDB [company]> select * from emplo;
++----+--------+------------+------+--------+------------+------+
+| id | fname  | lname      | age  | salary | mobile     | did  |
++----+--------+------------+------+--------+------------+------+
+|  1 | atharv | dehaan     |   22 |  50000 | 2147483647 |    3 |
+|  2 | vasu   | sonkavde   |   23 |  70000 | 2147483647 |    1 |
+|  3 | shodan | narayankar |   21 |  60000 | 9902427776 |    3 |
+|  4 | pratik | darwar     |   25 |  55000 | 9865188776 |    1 |
+|  5 | rishi  | chavhan    |   24 |  65000 | 9102277661 |    2 |
++----+--------+------------+------+--------+------------+------+
+5 rows in set (0.000 sec)
+
+MariaDB [company]> select fname,did from emplo where lname='dehaan';
++--------+------+
+| fname  | did  |
++--------+------+
+| atharv |    3 |
++--------+------+
+1 row in set (0.001 sec)
+
+MariaDB [company]> select * from depart;
++--------+----------+
+| deptid | deptname |
++--------+----------+
+|      1 | IT       |
+|      2 | HR       |
+|      3 | Sales    |
++--------+----------+
+3 rows in set (0.001 sec)
+
+MariaDB [company]> select * from emplo where did=3;
++----+--------+------------+------+--------+------------+------+
+| id | fname  | lname      | age  | salary | mobile     | did  |
++----+--------+------------+------+--------+------------+------+
+|  1 | atharv | dehaan     |   22 |  50000 | 2147483647 |    3 |
+|  3 | shodan | narayankar |   21 |  60000 | 9902427776 |    3 |
++----+--------+------------+------+--------+------------+------+
+2 rows in set (0.001 sec)
+
+
+MariaDB [company]> select fname,lname,did,salary from emplo where salary>9700;
++--------+------------+------+--------+
+| fname  | lname      | did  | salary |
++--------+------------+------+--------+
+| atharv | dehaan     |    3 |  50000 |
+| vasu   | sonkavde   |    1 |  70000 |
+| shodan | narayankar |    3 |  60000 |
+| pratik | darwar     |    1 |  55000 |
+| rishi  | chavhan    |    2 |  65000 |
++--------+------------+------+--------+
+5 rows in set (0.001 sec)
+
+MariaDB [company]> select * from emplo;
++----+--------+------------+------+--------+------------+------+------------+
+| id | fname  | lname      | age  | salary | mobile     | did  | doj        |
++----+--------+------------+------+--------+------------+------+------------+
+|  1 | atharv | dehaan     |   22 |  50000 | 2147483647 |    3 | 1991-12-10 |
+|  2 | vasu   | sonkavde   |   23 |  70000 | 2147483647 |    1 | 2023-01-01 |
+|  3 | shodan | narayankar |   21 |  60000 | 9902427776 |    3 | 2000-02-22 |
+|  4 | pratik | darwar     |   25 |  55000 | 9865188776 |    1 | 1995-06-12 |
+|  5 | rishi  | chavhan    |   24 |  65000 | 9102277661 |    2 | 2015-08-25 |
++----+--------+------------+------+--------+------------+------+------------+
+5 rows in set (0.000 sec)
+
+MariaDB [company]> select * from emplo where doj < '1992-01-10';
++----+--------+--------+------+--------+------------+------+------------+
+| id | fname  | lname  | age  | salary | mobile     | did  | doj        |
++----+--------+--------+------+--------+------------+------+------------+
+|  1 | atharv | dehaan |   22 |  50000 | 2147483647 |    3 | 1991-12-10 |
++----+--------+--------+------+--------+------------+------+------------+
+1 row in set (0.001 sec)
+
+MariaDB [company]> select id,fname,id as jobid,did from emplo where did IN (20,60,80);
+Empty set (0.001 sec)
+
+
+MariaDB [company]> select id,fname,id as jobid,did from emplo where did NOT IN (20,60,80);
++----+--------+-------+------+
+| id | fname  | jobid | did  |
++----+--------+-------+------+
+|  1 | atharv |     1 |    3 |
+|  2 | vasu   |     2 |    1 |
+|  3 | shodan |     3 |    3 |
+|  4 | pratik |     4 |    1 |
+|  5 | rishi  |     5 |    2 |
++----+--------+-------+------+
+5 rows in set (0.001 sec)
+
+MariaDB [company]> select lname,mobile,salary,managerNo from emplo where managerNo In (101,102,103);
++------------+------------+--------+-----------+
+| lname      | mobile     | salary | managerNo |
++------------+------------+--------+-----------+
+| dehaan     | 2147483647 |  50000 |       103 |
+| sonkavde   | 2147483647 |  70000 |       101 |
+| narayankar | 9902427776 |  60000 |       103 |
+| darwar     | 9865188776 |  55000 |       101 |
+| chavhan    | 9102277661 |  65000 |       102 |
++------------+------------+--------+-----------+
+5 rows in set (0.001 sec)
+
+MariaDB [company]> select fname,salary from emplo where fname like '%u';
++-------+--------+
+| fname | salary |
++-------+--------+
+| vasu  |  70000 |
++-------+--------+
+1 row in set (0.001 sec)
+
+MariaDB [company]> select fname,salary from emplo where fname like '%e';
+Empty set (0.001 sec)
+
+MariaDB [company]> select fname,salary from emplo where fname like '%i_';
++--------+--------+
+| fname  | salary |
++--------+--------+
+| pratik |  55000 |
++--------+--------+
+1 row in set (0.000 sec)
+
+MariaDB [company]> select lname,did from emplo where lname like '%i_';
+Empty set (0.001 sec)
+
+MariaDB [company]> select * from emplo where lname IN ('%l%','%j%','%h%') order by salary desc;
+Empty set (0.001 sec)
+
+MariaDB [company]> select fname,doj,doj as hireDate,salary,did from emplo where fname NOT like ('%a%') order by did;
++-------+------------+------------+--------+------+
+| fname | doj        | hireDate   | salary | did  |
++-------+------------+------------+--------+------+
+| rishi | 2015-08-25 | 2015-08-25 |  65000 |    2 |
++-------+------------+------------+--------+------+
+1 row in set (0.001 sec)
+
+MariaDB [company]> select * from emplo where did is null;
+Empty set (0.001 sec)
+
+MariaDB [company]> select concat(fname,lname) as name,salary from emplo where salary between 7000 and 15000;
+Empty set (0.001 sec)
+
+MariaDB [company]> select concat(fname,',',lname) as name,salary from emplo where salary between 60000 and 90000;
++-------------------+--------+
+| name              | salary |
++-------------------+--------+
+| vasu,sonkavde     |  70000 |
+| shodan,narayankar |  60000 |
+| rishi,chavhan     |  65000 |
++-------------------+--------+
+3 rows in set (0.001 sec)
+
+MariaDB [company]> select concat(fname,',',lname) as FULL_NAME, concat(mobile,'-',email) as CONTACTS,salary as SAL from emplo where salary between 60000 and 90000 ;
++-------------------+-----------------------------+-------+
+| FULL_NAME         | CONTACTS                    | SAL   |
++-------------------+-----------------------------+-------+
+| vasu,sonkavde     | 2147483647-vasu@gmail.com   | 70000 |
+| shodan,narayankar | 9902427776-shodan@gmail.com | 60000 |
+| rishi,chavhan     | 9102277661-rishi@gmail.com  | 65000 |
++-------------------+-----------------------------+-------+
+3 rows in set (0.001 sec)
+
+
+MariaDB [company]> select * from emplo where (salary between 50000 and 70000) and (did not in(1,2)) and (doj<'1995-06-12');
++----+--------+--------+------+--------+------------+------+------------+-----------+------------------+
+| id | fname  | lname  | age  | salary | mobile     | did  | doj        | managerNo | email            |
++----+--------+--------+------+--------+------------+------+------------+-----------+------------------+
+|  1 | atharv | dehaan |   22 |  50000 | 2147483647 |    3 | 1991-12-10 |       103 | atharv@gmail.com |
++----+--------+--------+------+--------+------------+------+------------+-----------+------------------+
+1 row in set (0.001 sec)
+
+MariaDB [company]> select lname,id as jobid,doj as hiredate from emplo where doj IN ('1995-06-12','2015-08-25');
++---------+-------+------------+
+| lname   | jobid | hiredate   |
++---------+-------+------------+
+| darwar  |     4 | 1995-06-12 |
+| chavhan |     5 | 2015-08-25 |
++---------+-------+------------+
+2 rows in set (0.000 sec)
+
+
+MariaDB [company]> select concat(fname,lname),doj as hiredate,mobile,salary from emplo where salary>55000 order by fname desc;
++---------------------+------------+------------+--------+
+| concat(fname,lname) | hiredate   | mobile     | salary |
++---------------------+------------+------------+--------+
+| vasusonkavde        | 2023-01-01 | 2147483647 |  70000 |
+| shodannarayankar    | 2000-02-22 | 9902427776 |  60000 |
+| rishichavhan        | 2015-08-25 | 9102277661 |  65000 |
++---------------------+------------+------------+--------+
+3 rows in set (0.001 sec)
+
+MariaDB [company]> select lname,salary from emplo where salary>60000;
++----------+--------+
+| lname    | salary |
++----------+--------+
+| sonkavde |  70000 |
+| chavhan  |  65000 |
++----------+--------+
+2 rows in set (0.000 sec)
+
+MariaDB [company]> select lname,did from emplo where did IN (1,2);
++----------+------+
+| lname    | did  |
++----------+------+
+| sonkavde |    1 |
+| darwar   |    1 |
+| chavhan  |    2 |
++----------+------+
+3 rows in set (0.002 sec)
+
+MariaDB [company]> select lname,did from emplo where did=1 or did=2;
++----------+------+
+| lname    | did  |
++----------+------+
+| sonkavde |    1 |
+| darwar   |    1 |
+| chavhan  |    2 |
++----------+------+
+3 rows in set (0.001 sec)
+
+MariaDB [company]> select fname,salary from emplo;
++--------+--------+
+| fname  | salary |
++--------+--------+
+| atharv |  50000 |
+| vasu   |  70000 |
+| shodan |  60000 |
+| pratik |  55000 |
+| rishi  |  65000 |
++--------+--------+
+5 rows in set (0.001 sec)
+
+MariaDB [company]> select fname,salary, managerNo from emplo where managerNo is not null;
++--------+--------+-----------+
+| fname  | salary | managerNo |
++--------+--------+-----------+
+| atharv |  50000 |       103 |
+| vasu   |  70000 |       101 |
+| shodan |  60000 |       103 |
+| pratik |  55000 |       101 |
+| rishi  |  65000 |       102 |
++--------+--------+-----------+
+5 rows in set (0.000 sec)
+
+SOLVED USING SQL SCALAR/NUMERIC Functions
+
+MariaDB [company]> select  lower(fname),upper(lname) from emplo where id IN (1,3);
++--------------+--------------+
+| lower(fname) | upper(lname) |
++--------------+--------------+
+| atharv       | DEHAAN       |
+| shodan       | NARAYANKAR   |
++--------------+--------------+
+2 rows in set (0.001 sec)
+
+MariaDB [company]> select fname,lname from emplo where upper(lname)=upper('KING');
+Empty set (0.001 sec)
+
+MariaDB [company]> select fname,lname,email,concat(left(fname,1),left(lname,3),'@oracle.com') as emailAddress from emplo;
++--------+------------+------------------+-----------------+
+| fname  | lname      | email            | emailAddress    |
++--------+------------+------------------+-----------------+
+| atharv | dehaan     | atharv@gmail.com | adeh@oracle.com |
+| vasu   | sonkavde   | vasu@gmail.com   | vson@oracle.com |
+| shodan | narayankar | shodan@gmail.com | snar@oracle.com |
+| pratik | darwar     | pratik@gmail.com | pdar@oracle.com |
+| rishi  | chavhan    | rishi@gmail.com  | rcha@oracle.com |
++--------+------------+------------------+-----------------+
+5 rows in set (0.001 sec)
+
+MariaDB [company]> select concat(fname,lname) as name from emplo;
++------------------+
+| name             |
++------------------+
+| atharvdehaan     |
+| vasusonkavde     |
+| shodannarayankar |
+| pratikdarwar     |
+| rishichavhan     |
++------------------+
+5 rows in set (0.000 sec)
+
+MariaDB [company]> select concat(fname,lname,' = ',doj) as employeeDetails from emplo;
++-------------------------------+
+| employeeDetails               |
++-------------------------------+
+| atharvdehaan = 1991-12-10     |
+| vasusonkavde = 2023-01-01     |
+| shodannarayankar = 2000-02-22 |
+| pratikdarwar = 1995-06-12     |
+| rishichavhan = 2015-08-25     |
++-------------------------------+
+5 rows in set (0.001 sec)
+
+MariaDB [company]> select lname from emplo where length(lname)>8;
++------------+
+| lname      |
++------------+
+| narayankar |
++------------+
+1 row in set (0.001 sec)
+
+MariaDB [company]> select fname,lname,mobile, replace(mobile,'776','832') as phonenumber from emplo;
++--------+------------+------------+-------------+
+| fname  | lname      | mobile     | phonenumber |
++--------+------------+------------+-------------+
+| atharv | dehaan     | 2147483647 | 2147483647  |
+| vasu   | sonkavde   | 2147483647 | 2147483647  |
+| shodan | narayankar | 9902427776 | 9902427832  |
+| pratik | darwar     | 9865188776 | 9865188832  |
+| rishi  | chavhan    | 9102277661 | 9102283261  |
++--------+------------+------------+-------------+
+5 rows in set (0.001 sec)
+
+MariaDB [company]> select fname,lname,mobile,concat('990',substring(mobile,4)) as newmmobile from emplo where mobile like '214%';
++--------+----------+------------+------------+
+| fname  | lname    | mobile     | newmmobile |
++--------+----------+------------+------------+
+| atharv | dehaan   | 2147483647 | 9907483647 |
+| vasu   | sonkavde | 2147483647 | 9907483647 |
++--------+----------+------------+------------+
+2 rows in set (0.001 sec)
+
+MariaDB [company]> select * from emplo;
++----+--------+------------+------+--------+------------+------+------------+-----------+------------------+
+| id | fname  | lname      | age  | salary | mobile     | did  | doj        | managerNo | email            |
++----+--------+------------+------+--------+------------+------+------------+-----------+------------------+
+|  1 | atharv | dehaan     |   22 |  50000 | 2147483647 |    3 | 1991-12-10 |       103 | atharv@gmail.com |
+|  2 | vasu   | sonkavde   |   23 |  70000 | 2147483647 |    1 | 2023-01-01 |       101 | vasu@gmail.com   |
+|  3 | shodan | narayankar |   21 |  60000 | 9902427776 |    3 | 2000-02-22 |       103 | shodan@gmail.com |
+|  4 | pratik | darwar     |   25 |  55000 | 9865188776 |    1 | 1995-06-12 |       101 | pratik@gmail.com |
+|  5 | rishi  | chavhan    |   24 |  65000 | 9102277661 |    2 | 2015-08-25 |       102 | rishi@gmail.com  |
++----+--------+------------+------+--------+------------+------+------------+-----------+------------------+
+5 rows in set (0.001 sec)
+
+MariaDB [company]> select fname from emplo;
++--------+
+| fname  |
++--------+
+| atharv |
+| vasu   |
+| shodan |
+| pratik |
+| rishi  |
++--------+
+5 rows in set (0.001 sec)
+
+MariaDB [company]> select salary from emplo;
++--------+
+| salary |
++--------+
+|  50000 |
+|  70000 |
+|  60000 |
+|  55000 |
+|  65000 |
++--------+
+5 rows in set (0.000 sec)
+
+MariaDB [company]> select salary*1.12 as salary_after_raise from emplo;
++--------------------+
+| salary_after_raise |
++--------------------+
+|           56000.00 |
+|           78400.00 |
+|           67200.00 |
+|           61600.00 |
+|           72800.00 |
++--------------------+
+5 rows in set (0.001 sec)
+
+MariaDB [company]> select round(salary*1.12) as salary_after_raise from emplo;
++--------------------+
+| salary_after_raise |
++--------------------+
+|              56000 |
+|              78400 |
+|              67200 |
+|              61600 |
+|              72800 |
++--------------------+
+5 rows in set (0.001 sec)
+
+
+MariaDB [company]> select floor(salary*1.12) as salary_after_raise from emplo;
++--------------------+
+| salary_after_raise |
++--------------------+
+|              56000 |
+|              78400 |
+|              67200 |
+|              61600 |
+|              72800 |
++--------------------+
+5 rows in set (0.001 sec)
+
+MariaDB [company]> select fname,doj,doj - 10 as hire_date_minus_10_days,
+    -> DATE_ADD(doj, INTERVAL 1 MONTH) as hire_date_add_1_month,
+    -> DATEDIFF(NOW(), doj) as day_difference from emplo;
++--------+------------+-------------------------+-----------------------+----------------+
+| fname  | doj        | hire_date_minus_10_days | hire_date_add_1_month | day_difference |
++--------+------------+-------------------------+-----------------------+----------------+
+| atharv | 1991-12-10 |                19911200 | 1992-01-10            |          11628 |
+| vasu   | 2023-01-01 |                20230091 | 2023-02-01            |            283 |
+| shodan | 2000-02-22 |                20000212 | 2000-03-22            |           8632 |
+| pratik | 1995-06-12 |                19950602 | 1995-07-12            |          10348 |
+| rishi  | 2015-08-25 |                20150815 | 2015-09-25            |           2969 |
++--------+------------+-------------------------+-----------------------+----------------+
+5 rows in set (0.001 sec)
+
+MariaDB [company]> select fname,lname,doj,MONTH(doj) as months_worked,YEAR(doj) as years_worked from emplo;
++--------+------------+------------+---------------+--------------+
+| fname  | lname      | doj        | months_worked | years_worked |
++--------+------------+------------+---------------+--------------+
+| atharv | dehaan     | 1991-12-10 |            12 |         1991 |
+| vasu   | sonkavde   | 2023-01-01 |             1 |         2023 |
+| shodan | narayankar | 2000-02-22 |             2 |         2000 |
+| pratik | darwar     | 1995-06-12 |             6 |         1995 |
+| rishi  | chavhan    | 2015-08-25 |             8 |         2015 |
++--------+------------+------------+---------------+--------------+
+5 rows in set (0.001 sec)
+
+MariaDB [company]> select fname,doj,DATE_ADD(doj, INTERVAL 1 YEAR) as year_plus_one from emplo;
++--------+------------+---------------+
+| fname  | doj        | year_plus_one |
++--------+------------+---------------+
+| atharv | 1991-12-10 | 1992-12-10    |
+| vasu   | 2023-01-01 | 2024-01-01    |
+| shodan | 2000-02-22 | 2001-02-22    |
+| pratik | 1995-06-12 | 1996-06-12    |
+| rishi  | 2015-08-25 | 2016-08-25    |
++--------+------------+---------------+
+5 rows in set (0.001 sec)
+
+MariaDB [company]> select fname,doj,ROUND(month(doj+1)),ROUND(year(doj+1)) from emplo;
++--------+------------+---------------------+--------------------+
+| fname  | doj        | ROUND(month(doj+1)) | ROUND(year(doj+1)) |
++--------+------------+---------------------+--------------------+
+| atharv | 1991-12-10 |                  12 |               1991 |
+| vasu   | 2023-01-01 |                   1 |               2023 |
+| shodan | 2000-02-22 |                   2 |               2000 |
+| pratik | 1995-06-12 |                   6 |               1995 |
+| rishi  | 2015-08-25 |                   8 |               2015 |
++--------+------------+---------------------+--------------------+
+5 rows in set (0.001 sec)
+
++--------+------------+---------------------------------+--------------------------------+
+| fname  | doj        | DATE_ADD(doj, INTERVAL 1 MONTH) | DATE_ADD(doj, INTERVAL 1 YEAR) |
++--------+------------+---------------------------------+--------------------------------+
+| atharv | 1991-12-10 | 1992-01-10                      | 1992-12-10                     |
+| vasu   | 2023-01-01 | 2023-02-01                      | 2024-01-01                     |
+| shodan | 2000-02-22 | 2000-03-22                      | 2001-02-22                     |
+| pratik | 1995-06-12 | 1995-07-12                      | 1996-06-12                     |
+| rishi  | 2015-08-25 | 2015-09-25                      | 2016-08-25                     |
++--------+------------+---------------------------------+--------------------------------+
+5 rows in set (0.001 sec)
+
+MariaDB [company]> select fname,doj,DATE_FORMAT(doj,'%a'),YEAR(doj) from emplo;
++--------+------------+-----------------------+-----------+
+| fname  | doj        | DATE_FORMAT(doj,'%a') | YEAR(doj) |
++--------+------------+-----------------------+-----------+
+| atharv | 1991-12-10 | Tue                   |      1991 |
+| vasu   | 2023-01-01 | Sun                   |      2023 |
+| shodan | 2000-02-22 | Tue                   |      2000 |
+| pratik | 1995-06-12 | Mon                   |      1995 |
+| rishi  | 2015-08-25 | Tue                   |      2015 |
++--------+------------+-----------------------+-----------+
+5 rows in set (0.001 sec)
+
+MariaDB [company]> select upper(lname),FORMAT(salary,0) as formatted_salary,DATE_FORMAT(doj,'%d/%m/%Y') from emplo where lname like
+    -> 'd%' or lname like 'k%';
++--------------+------------------+-----------------------------+
+| upper(lname) | formatted_salary | DATE_FORMAT(doj,'%d/%m/%Y') |
++--------------+------------------+-----------------------------+
+| DEHAAN       | 50,000           | 10/12/1991                  |
+| DARWAR       | 55,000           | 12/06/1995                  |
++--------------+------------------+-----------------------------+
+2 rows in set (0.001 sec)
+
+MariaDB [company]> select fname,lname,salary,commissionper,
+    -> COALESCE(commissionper,0) as commissionpercentage from emplo;
++--------+------------+--------+---------------+----------------------+
+| fname  | lname      | salary | commissionper | commissionpercentage |
++--------+------------+--------+---------------+----------------------+
+| atharv | dehaan     |  50000 |             1 |                    1 |
+| vasu   | sonkavde   |  70000 |          NULL |                    0 |
+| shodan | narayankar |  60000 |             5 |                    5 |
+| pratik | darwar     |  55000 |             2 |                    2 |
+| rishi  | chavhan    |  65000 |             8 |                    8 |
++--------+------------+--------+---------------+----------------------+
+5 rows in set (0.001 sec)
+
+MariaDB [company]> select fname,lname,salary,commissionper,
+    -> IFNULl(commissionper,'NO commission') from emplo;
++--------+------------+--------+---------------+---------------------------------------+
+| fname  | lname      | salary | commissionper | IFNULl(commissionper,'NO commission') |
++--------+------------+--------+---------------+---------------------------------------+
+| atharv | dehaan     |  50000 |             1 | 1                                     |
+| vasu   | sonkavde   |  70000 |          NULL | NO commission                         |
+| shodan | narayankar |  60000 |             5 | 5                                     |
+| pratik | darwar     |  55000 |             2 | 2                                     |
+| rishi  | chavhan    |  65000 |             8 | 8                                     |
++--------+------------+--------+---------------+---------------------------------------+
+5 rows in set (0.000 sec)
+
+MariaDB [company]> select fname,lname,salary,
+    -> case
+    -> when salary between 50000 and 60000 then 'salary grade level is A'
+    -> when salary between 60000 and 65000 then 'salary grade level is B'
+    -> when salary>65000 then 'salary grade level is C'
+    -> else 'salary grade level is D'
+    -> end as salary_grade
+    -> from emplo;
++--------+------------+--------+-------------------------+
+| fname  | lname      | salary | salary_grade            |
++--------+------------+--------+-------------------------+
+| atharv | dehaan     |  50000 | salary grade level is A |
+| vasu   | sonkavde   |  70000 | salary grade level is C |
+| shodan | narayankar |  60000 | salary grade level is A |
+| pratik | darwar     |  55000 | salary grade level is A |
+| rishi  | chavhan    |  65000 | salary grade level is B |
++--------+------------+--------+-------------------------+
+5 rows in set (0.001 sec)
+
+Problem Statements to be solved using – Basic Select Statements
+
+MariaDB [company]> select fname,lname,mobile,did from emplo;
++--------+------------+------------+------+
+| fname  | lname      | mobile     | did  |
++--------+------------+------------+------+
+| atharv | dehaan     | 2147483647 |    3 |
+| vasu   | sonkavde   | 2147483647 |    1 |
+| shodan | narayankar | 9902427776 |    3 |
+| pratik | darwar     | 9865188776 |    1 |
+| rishi  | chavhan    | 9102277661 |    2 |
++--------+------------+------------+------+
+5 rows in set (0.001 sec)
+
+MariaDB [company]> select fname,lname,doj,salary,ROUND(salary*1.20) as ANNUAL_SAL from emplo;
++--------+------------+------------+--------+------------+
+| fname  | lname      | doj        | salary | ANNUAL_SAL |
++--------+------------+------------+--------+------------+
+| atharv | dehaan     | 1991-12-10 |  50000 |      60000 |
+| vasu   | sonkavde   | 2023-01-01 |  70000 |      84000 |
+| shodan | narayankar | 2000-02-22 |  60000 |      72000 |
+| pratik | darwar     | 1995-06-12 |  55000 |      66000 |
+| rishi  | chavhan    | 2015-08-25 |  65000 |      78000 |
++--------+------------+------------+--------+------------+
+5 rows in set (0.001 sec)
+
+MariaDB [company]> select concat(fname,' ',lname) as FULL_NAME, concat(mobile,'-',email) as CONTACT_DETAILS from emplo;
++-------------------+-----------------------------+
+| FULL_NAME         | CONTACT_DETAILS             |
++-------------------+-----------------------------+
+| atharv dehaan     | 2147483647-atharv@gmail.com |
+| vasu sonkavde     | 2147483647-vasu@gmail.com   |
+| shodan narayankar | 9902427776-shodan@gmail.com |
+| pratik darwar     | 9865188776-pratik@gmail.com |
+| rishi chavhan     | 9102277661-rishi@gmail.com  |
++-------------------+-----------------------------+
+5 rows in set (0.001 sec)
+
+MariaDB [company]> select distinct managerNo from emplo;
++-----------+
+| managerNo |
++-----------+
+|       103 |
+|       101 |
+|       102 |
++-----------+
+3 rows in set (0.002 sec)
+
+
+MariaDB [company]> select concat(lname,' ',id) as EMPLOYEE_AND_TITLE from emplo;
++--------------------+
+| EMPLOYEE_AND_TITLE |
++--------------------+
+| dehaan 1           |
+| sonkavde 2         |
+| narayankar 3       |
+| darwar 4           |
+| chavhan 5          |
++--------------------+
+5 rows in set (0.001 sec)
+
+MariaDB [company]> select fname as FN,lname as LN,salary as SAL,concat(doj,' HD') as HD from emplo;
++--------+------------+-------+---------------+
+| FN     | LN         | SAL   | HD            |
++--------+------------+-------+---------------+
+| atharv | dehaan     | 50000 | 1991-12-10 HD |
+| vasu   | sonkavde   | 70000 | 2023-01-01 HD |
+| shodan | narayankar | 60000 | 2000-02-22 HD |
+| pratik | darwar     | 55000 | 1995-06-12 HD |
+| rishi  | chavhan    | 65000 | 2015-08-25 HD |
++--------+------------+-------+---------------+
+5 rows in set (0.001 sec)
+
+MariaDB [company]> select distinct salary from emplo;
++--------+
+| salary |
++--------+
+|  50000 |
+|  70000 |
+|  60000 |
+|  55000 |
+|  65000 |
++--------+
+5 rows in set (0.001 sec)
+
+MariaDB [company]> select distinct did,id from emplo;
++------+----+
+| did  | id |
++------+----+
+|    3 |  1 |
+|    1 |  2 |
+|    3 |  3 |
+|    1 |  4 |
+|    2 |  5 |
++------+----+
+5 rows in set (0.001 sec)
+
+Problem Statements to be solved using – Group By
+
+MariaDB [company]> select lname from emplo group by lname order by lname asc;
++------------+
+| lname      |
++------------+
+| chavhan    |
+| darwar     |
+| dehaan     |
+| narayankar |
+| sonkavde   |
++------------+
+5 rows in set (0.001 sec)
+
+MariaDB [company]> select lname from emplo group by lname order by lname desc;
++------------+
+| lname      |
++------------+
+| sonkavde   |
+| narayankar |
+| dehaan     |
+| darwar     |
+| chavhan    |
++------------+
+5 rows in set (0.001 sec)
+
+MariaDB [company]> select count(*) from emplo;
++----------+
+| count(*) |
++----------+
+|        5 |
++----------+
+1 row in set (0.001 sec)
+
+MariaDB [company]> select commissionper,count(commissionper) from emplo where commissionper is not null group by commissionper;
++---------------+----------------------+
+| commissionper | count(commissionper) |
++---------------+----------------------+
+|             1 |                    1 |
+|             2 |                    1 |
+|             5 |                    1 |
+|             8 |                    1 |
++---------------+----------------------+
+4 rows in set (0.001 sec)
+
+MariaDB [company]> select commissionper,count(commissionper) from emplo where commissionper is null group by commissionper;
++---------------+----------------------+
+| commissionper | count(commissionper) |
++---------------+----------------------+
+|          NULL |                    0 |
++---------------+----------------------+
+1 row in set (0.001 sec)
+
+MariaDB [company]> select max(salary),min(salary),avg(salary) from emplo;
++-------------+-------------+-------------+
+| max(salary) | min(salary) | avg(salary) |
++-------------+-------------+-------------+
+|       70000 |       50000 |  60000.0000 |
++-------------+-------------+-------------+
+1 row in set (0.001 sec)
+
+Problem Statements to be solved using - GROUP BY and HAVING Clauses
+
+MariaDB [company]> select did,avg(salary) from emplo group by did;
++------+-------------+
+| did  | avg(salary) |
++------+-------------+
+|    1 |  62500.0000 |
+|    2 |  65000.0000 |
+|    3 |  55000.0000 |
++------+-------------+
+3 rows in set (0.001 sec)
+
+MariaDB [company]> select did,avg(salary) from emplo group by did IN (1,2);
++------+-------------+
+| did  | avg(salary) |
++------+-------------+
+|    3 |  55000.0000 |
+|    1 |  63333.3333 |
++------+-------------+
+2 rows in set (0.001 sec)
+
+MariaDB [company]> select id,count(*) as emplo_count from emplo group by id;
++----+-------------+
+| id | emplo_count |
++----+-------------+
+|  1 |           1 |
+|  2 |           1 |
+|  3 |           1 |
+|  4 |           1 |
+|  5 |           1 |
++----+-------------+
+5 rows in set (0.001 sec)
+
+MariaDB [company]> select id,count(*),salary from emplo where salary>55000 group by id;
++----+----------+--------+
+| id | count(*) | salary |
++----+----------+--------+
+|  2 |        1 |  70000 |
+|  3 |        1 |  60000 |
+|  5 |        1 |  65000 |
++----+----------+--------+
+3 rows in set (0.001 sec)
+
+MariaDB [company]> select id,count(*) as emplo from emplo group by id having count(id)>2;
+Empty set (0.001 sec)
+
+MariaDB [company]> select did,count(*) as emplo from emplo group by did having count(did)>=2;
++------+-------+
+| did  | emplo |
++------+-------+
+|    1 |     2 |
+|    3 |     2 |
++------+-------+
+2 rows in set (0.001 sec)
+
+MariaDB [company]> select did,id as jobid,avg(salary) from emplo group by did and id;
++------+-------+-------------+
+| did  | jobid | avg(salary) |
++------+-------+-------------+
+|    3 |     1 |  60000.0000 |
++------+-------+-------------+
+1 row in set (0.001 sec)
+
+MariaDB [company]> select managerNO, max(salary) from emplo group by managerNo;
++-----------+-------------+
+| managerNO | max(salary) |
++-----------+-------------+
+|       101 |       70000 |
+|       102 |       65000 |
+|       103 |       60000 |
++-----------+-------------+
+3 rows in set (0.001 sec)
+
+MariaDB [company]> select managerNO, max(salary) from emplo where salary>50000 group by managerNo;
++-----------+-------------+
+| managerNO | max(salary) |
++-----------+-------------+
+|       101 |       70000 |
+|       102 |       65000 |
+|       103 |       60000 |
++-----------+-------------+
+3 rows in set (0.001 sec)
+
+MariaDB [company]> select id as jobi,min(salary) from emplo group by id having max(salary)>50000;
++------+-------------+
+| jobi | min(salary) |
++------+-------------+
+|    2 |       70000 |
+|    3 |       60000 |
+|    4 |       55000 |
+|    5 |       65000 |
++------+-------------+
+4 rows in set (0.001 sec)
+
+MariaDB [company]> select did,avg(salary) from emplo where did between 1 and 2 group by did having avg(salary)>55000;
++------+-------------+
+| did  | avg(salary) |
++------+-------------+
+|    1 |  62500.0000 |
+|    2 |  65000.0000 |
++------+-------------+
+2 rows in set (0.001 sec)
+
+Problem Statements to be solved using – SQL Sub-Queries
+
+MariaDB [company]> select fname,salary from emplo where salary > (select salary from emplo where id=4);
++--------+--------+
+| fname  | salary |
++--------+--------+
+| vasu   |  70000 |
+| shodan |  60000 |
+| rishi  |  65000 |
++--------+--------+
+3 rows in set (0.002 sec)
+
+MariaDB [company]> select deptid,deptname from deprt where locationid = (select locationid from depart where deptid=1);
++--------+----------+
+| deptid | deptname |
++--------+----------+
+|      1 | IT       |
+|      3 | HR       |
++--------+----------+
+2 rows in set (0.001 sec)
+
+MariaDB [company]> select lname,doj from emplo where id = (select id from emplo where id=1);
++--------+------------+
+| lname  | doj        |
++--------+------------+
+| dehaan | 1991-12-10 |
++--------+------------+
+1 row in set (0.001 sec)
+
+MariaDB [company]> select fname,lname,did from emplo where did IN (select did from emplo where did=3);
++--------+------------+------+
+| fname  | lname      | did  |
++--------+------------+------+
+| atharv | dehaan     |    3 |
+| shodan | narayankar |    3 |
++--------+------------+------+
+2 rows in set (0.001 sec)
+
+MariaDB [company]> select deptid,deptname from depart where locationid IN ( select locationid from depart where locationid=1);
++--------+----------+
+| deptid | deptname |
++--------+----------+
+|      1 | IT       |
+|      3 | HR       |
++--------+----------+
+2 rows in set (0.001 sec)
+
+MariaDB [company]> select fname,salary,did from emplo where id IN ( select id from emplo where id=1);
++--------+--------+------+
+| fname  | salary | did  |
++--------+--------+------+
+| atharv |  50000 |    3 |
++--------+--------+------+
+1 row in set (0.001 sec)
+
+MariaDB [company]> select fname,salary,did from emplo where salary > (select avg(salary) from emplo);
++-------+--------+------+
+| fname | salary | did  |
++-------+--------+------+
+| vasu  |  70000 |    1 |
+| rishi |  65000 |    2 |
++-------+--------+------+
+2 rows in set (0.000 sec)
+
+MariaDB [company]> select fname,salary,did from emplo where salary = (select salary from emplo where did=2);
++-------+--------+------+
+| fname | salary | did  |
++-------+--------+------+
+| rishi |  65000 |    2 |
++-------+--------+------+
+1 row in set (0.001 sec)
+
+MariaDB [company]> select fname,salary,did from emplo where salary > (select max(salary) from emplo where did=3);
++-------+--------+------+
+| fname | salary | did  |
++-------+--------+------+
+| vasu  |  70000 |    1 |
+| rishi |  65000 |    2 |
++-------+--------+------+
+2 rows in set (0.001 sec)
+
+MariaDB [company]> select fname,salary,did from emplo where salary < (select min(salary) from emplo where did=2);
++--------+--------+------+
+| fname  | salary | did  |
++--------+--------+------+
+| atharv |  50000 |    3 |
+| shodan |  60000 |    3 |
+| pratik |  55000 |    1 |
++--------+--------+------+
+3 rows in set (0.001 sec)
+
+MariaDB [company]> select fname,salary,did from emplo where salary > (select min(salary) from emplo where did=2);
++-------+--------+------+
+| fname | salary | did  |
++-------+--------+------+
+| vasu  |  70000 |    1 |
++-------+--------+------+
+1 row in set (0.001 sec)
+
+MariaDB [company]> select fname,salary,did from emplo where salary > (select min(salary) from emplo where did=3);
++--------+--------+------+
+| fname  | salary | did  |
++--------+--------+------+
+| vasu   |  70000 |    1 |
+| shodan |  60000 |    3 |
+| pratik |  55000 |    1 |
+| rishi  |  65000 |    2 |
++--------+--------+------+
+4 rows in set (0.001 sec)
+
+MariaDB [company]> select fname,salary,did from emplo where salary < (select min(salary) from emplo where did=2);
++--------+--------+------+
+| fname  | salary | did  |
++--------+--------+------+
+| atharv |  50000 |    3 |
+| shodan |  60000 |    3 |
+| pratik |  55000 |    1 |
++--------+--------+------+
+3 rows in set (0.001 sec)
+
+MariaDB [company]> select fname,salary,did from emplo where did IN (select deptid from depart where location='blr');
++--------+--------+------+
+| fname  | salary | did  |
++--------+--------+------+
+| vasu   |  70000 |    1 |
+| pratik |  55000 |    1 |
++--------+--------+------+
+2 rows in set (0.001 sec)
+
+MariaDB [company]> select fname,salary,did from emplo where salary < (select avg(salary) from emplo where fname='shodan');
++--------+--------+------+
+| fname  | salary | did  |
++--------+--------+------+
+| atharv |  50000 |    3 |
+| pratik |  55000 |    1 |
++--------+--------+------+
+2 rows in set (0.001 sec)
+
+Problem Statements to be solved using – Inner JOIN
+
+MariaDB [company]> select fname,lname,did,deptname from emplo inner join depart on emplo.did=depart.deptid;
++--------+------------+------+----------+
+| fname  | lname      | did  | deptname |
++--------+------------+------+----------+
+| atharv | dehaan     |    3 | HR       |
+| vasu   | sonkavde   |    1 | IT       |
+| shodan | narayankar |    3 | HR       |
+| pratik | darwar     |    1 | IT       |
+| rishi  | chavhan    |    2 | dev      |
++--------+------------+------+----------+
+5 rows in set (0.001 sec)
+
+MariaDB [company]> select fname,lname,did,deptname from emplo inner join depart on emplo.did=depart.deptid;
++--------+------------+------+----------+
+| fname  | lname      | did  | deptname |
++--------+------------+------+----------+
+| atharv | dehaan     |    3 | HR       |
+| vasu   | sonkavde   |    1 | IT       |
+| shodan | narayankar |    3 | HR       |
+| pratik | darwar     |    1 | IT       |
+| rishi  | chavhan    |    2 | dev      |
++--------+------------+------+----------+
+5 rows in set (0.001 sec)
+
+MariaDB [company]> select concat(fname,lname) as full_name ,did,deptname from emplo inner join depart on emplo.did=depart.deptid;
++------------------+------+----------+
+| full_name        | did  | deptname |
++------------------+------+----------+
+| atharvdehaan     |    3 | HR       |
+| vasusonkavde     |    1 | IT       |
+| shodannarayankar |    3 | HR       |
+| pratikdarwar     |    1 | IT       |
+| rishichavhan     |    2 | dev      |
++------------------+------+----------+
+5 rows in set (0.001 sec)
+
+MariaDB [company]> select concat(fname,lname) as full_name ,did,deptname from emplo inner join depart on emplo.did=depart.deptid where lname like '%n';
++--------------+------+----------+
+| full_name    | did  | deptname |
++--------------+------+----------+
+| atharvdehaan |    3 | HR       |
+| rishichavhan |    2 | dev      |
++--------------+------+----------+
+2 rows in set (0.001 sec)
+
+Problem Statements to be solved using – Outer JOIN
+
+MariaDB [company]> select fname,lname,did,deptname from emplo e left join depart d on e.did=d.deptid;
++--------+------------+------+----------+
+| fname  | lname      | did  | deptname |
++--------+------------+------+----------+
+| atharv | dehaan     |    3 | HR       |
+| vasu   | sonkavde   |    1 | IT       |
+| shodan | narayankar |    3 | HR       |
+| pratik | darwar     |    1 | IT       |
+| rishi  | chavhan    |    2 | dev      |
++--------+------------+------+----------+
+5 rows in set (0.001 sec)
+
+MariaDB [company]> select fname,lname,did,deptname from emplo e right join depart d on e.did=d.deptid;
++--------+------------+------+----------+
+| fname  | lname      | did  | deptname |
++--------+------------+------+----------+
+| atharv | dehaan     |    3 | HR       |
+| vasu   | sonkavde   |    1 | IT       |
+| shodan | narayankar |    3 | HR       |
+| pratik | darwar     |    1 | IT       |
+| rishi  | chavhan    |    2 | dev      |
+| NULL   | NULL       | NULL | sales    |
++--------+------------+------+----------+
+6 rows in set (0.001 sec)
+
+Problem Statements to be solved using – Self JOIN
+
+MariaDB [company]> select e1.lname,e2.lname,e1.managerName,e2.managerName from emplo e1,emplo e2 where e1.id=e2.id;
++------------+------------+-------------+-------------+
+| lname      | lname      | managerName | managerName |
++------------+------------+-------------+-------------+
+| dehaan     | dehaan     | swapnil     | swapnil     |
+| sonkavde   | sonkavde   | satish      | satish      |
+| narayankar | narayankar | swapnil     | swapnil     |
+| darwar     | darwar     | satish      | satish      |
+| chavhan    | chavhan    | devcham     | devcham     |
++------------+------------+-------------+-------------+
+5 rows in set (0.001 sec)
+
+MariaDB [company]> select e1.lname,e2.lname,e1.managerName,e2.managerName from emplo e1,emplo e2 where e1.id=e2.id;
++------------+------------+-------------+-------------+
+| lname      | lname      | managerName | managerName |
++------------+------------+-------------+-------------+
+| dehaan     | dehaan     | swapnil     | swapnil     |
+| sonkavde   | sonkavde   | satish      | satish      |
+| narayankar | narayankar | swapnil     | swapnil     |
+| darwar     | darwar     | satish      | satish      |
+| chavhan    | chavhan    | devcham     | devcham     |
+| jain       | jain       | NULL        | NULL        |
++------------+------------+-------------+-------------+
+6 rows in set (0.001 sec)
+
+MariaDB [company]> select e1.fname,e1.lname,e1.did,e2.fname,e2.lname,e2.did from emplo e1,emplo e2 where e1.id=e2.id and e1.lname like '%sonkavde';
++-------+----------+------+-------+----------+------+
+| fname | lname    | did  | fname | lname    | did  |
++-------+----------+------+-------+----------+------+
+| vasu  | sonkavde |    1 | vasu  | sonkavde |    1 |
++-------+----------+------+-------+----------+------+
+1 row in set (0.001 sec)
+
+MariaDB [company]> select lname,salary from emplo where id IN (select id from emplo where salary IN (select salary from emplo where did=3));
++------------+--------+
+| lname      | salary |
++------------+--------+
+| dehaan     |  50000 |
+| narayankar |  60000 |
++------------+--------+
+2 rows in set (0.001 sec)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
